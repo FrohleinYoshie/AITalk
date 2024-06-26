@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import startGemini from './gemini'; // gemini モジュールをデフォルトエクスポートとしてインポートする
-import icon from './aa.png';
+import icon from '../../assets/icon.png';
 import './App.css';
 
 function Hello() {
@@ -22,23 +22,33 @@ function Hello() {
     setOutputText(response);
   };
 
+  const handleResetClick = () => {
+    setOutputText('');
+    setUserVisible(true);
+  };
+
   return (
     <div>
       <div className="arona">
-        {userVisible && (
+        {userVisible ? (
           <div className="user">
             <input id="inputText" type="text" placeholder="Enter your name" />
             <button type="button" onClick={handleButtonClick}>
               Submit
             </button>
           </div>
+        ) : (
+          <div>
+            {outputText}
+            <button type="button" className="reset-button" onClick={handleResetClick}>
+              ×
+            </button>
+          </div>
         )}
-        {outputText}
       </div>
       <div className="Hello">
         <img width="200" alt="icon" src={icon} />
       </div>
-      {/* ユーザー入力フィールドとボタンの表示状態に応じて表示するか非表示にする */}
     </div>
   );
 }
